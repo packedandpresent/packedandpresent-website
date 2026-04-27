@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Blog — Packed & Present Travel</title>
+<link rel="icon" href="../favicon.ico">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1B4332;
+    --gold: #B8860B;
+    --gold-light: #D4A017;
+    --cream: #FAF7F0;
+    --dark: #0D1F18;
+    --text-mid: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Josefin Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 48px 0 0;
+    background: #0a2a25;
+    border-bottom: 1px solid rgba(184,134,11,0.3);
+    height: 85px;
+  }
+  nav .nav-banner { height: 85px; display: flex; align-items: center; }
+  nav .nav-banner img { height: 85px; width: auto; display: block; }
+  nav .cta-nav {
+    background: var(--gold); color: var(--dark);
+    padding: 12px 28px; border-radius: 2px;
+    font-weight: 600; font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s;
+  }
+  nav .cta-nav:hover { background: var(--gold-light); }
+
+  /* PAGE HERO */
+  .page-hero {
+    margin-top: 85px;
+    background: var(--forest);
+    padding: 80px 48px;
+    text-align: center;
+    border-bottom: 1px solid rgba(184,134,11,0.2);
+  }
+  .page-hero .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 16px; display: block; }
+  .page-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 5vw, 72px); font-weight: 300; color: var(--cream); line-height: 1.1; }
+  .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .page-hero p { font-size: 13px; letter-spacing: 1.5px; color: rgba(250,247,240,0.65); margin-top: 16px; text-transform: uppercase; }
+
+  /* BLOG LAYOUT */
+  .blog-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 72px 48px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* LEFT NAV */
+  .blog-sidebar {
+    position: sticky;
+    top: 110px;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .category-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .category-nav li a {
+    display: block;
+    padding: 10px 16px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .category-nav li a:hover { color: var(--forest); border-left-color: var(--gold-light); }
+  .category-nav li a.active { color: var(--forest); border-left-color: var(--gold); font-weight: 600; }
+
+  /* BLOG GRID */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .blog-card {
+    background: white;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(27,67,50,0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(27,67,50,0.12); }
+  .blog-card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  .blog-card-body { padding: 28px; }
+  .blog-card-category {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .blog-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .blog-card-excerpt {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    letter-spacing: 0.3px;
+    margin-bottom: 20px;
+  }
+  .blog-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(27,67,50,0.1);
+    padding-top: 16px;
+  }
+  .blog-card-date { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(74,85,104,0.6); }
+  .blog-card-link { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+
+  /* EMPTY STATE */
+  .blog-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 0;
+  }
+  .blog-empty p { font-size: 13px; color: var(--text-mid); letter-spacing: 1px; }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+  footer img { height: 44px; opacity: 0.9; }
+  footer .footer-links { display: flex; gap: 32px; }
+  footer a { color: rgba(250,247,240,0.6); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+  footer a:hover { color: var(--gold-light); }
+  footer .footer-contact { font-size: 12px; color: rgba(250,247,240,0.5); text-align: right; }
+  footer .footer-contact a { font-size: 12px; text-transform: none; color: var(--gold-light); }
+
+  @media (max-width: 900px) {
+    .blog-layout { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
+    .blog-sidebar { position: static; }
+    .category-nav { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .category-nav li a { border-left: none; border-bottom: 2px solid transparent; padding: 6px 12px; }
+    .category-nav li a.active { border-bottom-color: var(--gold); border-left-color: transparent; }
+    .blog-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 16px 0 0; height: 64px; }
+    nav .nav-banner img { height: 64px; }
+    .page-hero { padding: 60px 24px; margin-top: 64px; }
+    footer { padding: 32px 24px; flex-direction: column; }
+    footer .footer-contact { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-banner">
+    <a href="../index.html"><img src="../nav_logo_rect.png" alt="Packed and Present Travel"></a>
+  </div>
+  <a href="../intake.html" class="cta-nav">Start Planning</a>
+</nav>
+
+<div class="page-hero">
+  <span class="eyebrow">Packed & Present Travel</span>
+  <h1>Travel Stories &<br><em>Family Guides</em></h1>
+  <p>Inspiration for your next adventure</p>
+</div>
+
+<div class="blog-layout">
+
+  <!-- LEFT SIDEBAR NAV -->
+  <aside class="blog-sidebar">
+    <span class="sidebar-label">Browse by Topic</span>
+    <ul class="category-nav">
+      <li><a href="#" class="active" data-category="all">All Posts</a></li>
+      <li><a href="#" data-category="Getting Started">Getting Started</a></li>
+      <li><a href="#" data-category="International Travel">International Travel</a></li>
+      <li><a href="#" data-category="Domestic Travel">Domestic Travel</a></li>
+      <li><a href="#" data-category="Cruises & All-Inclusives">Cruises & All-Inclusives</a></li>
+      <li><a href="#" data-category="Theme Parks">Theme Parks</a></li>
+    </ul>
+  </aside>
+
+  <!-- BLOG POSTS GRID -->
+  <main>
+    <div class="blog-grid" id="blogGrid">
+      <div class="blog-empty"><p>Loading posts...</p></div>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-banner">
+    <img src="../nav_logo_rect.png" alt="Packed and Present Travel">
+  </div>
+  <div class="footer-links">
+    <a href="../about.html">About</a>
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#signup">Contact</a>
+    <a href="index.html">Blog</a>
+  </div>
+  <div class="footer-contact">
+    <a href="mailto:hello@packedandpresent.com">hello@packedandpresent.com</a><br>
+    <span style="color:rgba(250,247,240,0.4); font-size:11px;">(202) 838-7452 · packedandpresent.com</span>
+  </div>
+</footer>
+
+<script>
+  // Read category from URL param e.g. /blog/?category=International+Travel
+  const params = new URLSearchParams(window.location.search);
+  const urlCategory = params.get('category') || 'all';
+
+  let activeCategory = urlCategory;
+
+  // Set active nav link based on URL param
+  document.querySelectorAll('.category-nav a').forEach(link => {
+    const cat = link.getAttribute('data-category');
+    if (cat === activeCategory || (activeCategory === 'all' && cat === 'all')) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.category-nav a').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      activeCategory = this.getAttribute('data-category');
+      renderPosts(allPosts, activeCategory);
+    });
+  });
+
+  let allPosts = [];
+
+  fetch('posts.json')
+    .then(res => res.json())
+    .then(posts => {
+      allPosts = posts;
+      renderPosts(allPosts, activeCategory);
+    })
+    .catch(() => {
+      document.getElementById('blogGrid').innerHTML = '<div class="blog-empty"><p>No posts found.</p></div>';
+    });
+
+  function renderPosts(posts, category) {
+    const grid = document.getElementById('blogGrid');
+    const filtered = category === 'all' ? posts : posts.filter(p => p.category === category);
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="blog-empty"><p>No posts in this category yet. Check back soon.</p></div>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(post => `
+      <a class="blog-card" href="${post.slug}/index.html">
+        <img class="blog-card-image" src="${post.image}" alt="${post.title}">
+        <div class="blog-card-body">
+          <span class="blog-card-category">${post.category}</span>
+          <div class="blog-card-title">${post.title}</div>
+          <div class="blog-card-excerpt">${post.excerpt}</div>
+          <div class="blog-card-footer">
+            <span class="blog-card-date">${post.date}</span>
+            <span class="blog-card-link">Read More →</span>
+          </div>
+        </div>
+      </a>
+    `).join('');
+  }
+</script>
+
+</body>
+</html>

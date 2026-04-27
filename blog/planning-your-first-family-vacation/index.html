@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planning Your First Family Vacation: Where to Start — Packed & Present Travel</title>
+<link rel="icon" href="../../favicon.ico">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1B4332;
+    --gold: #B8860B;
+    --gold-light: #D4A017;
+    --cream: #FAF7F0;
+    --dark: #0D1F18;
+    --text-mid: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Josefin Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 48px 0 0;
+    background: #0a2a25;
+    border-bottom: 1px solid rgba(184,134,11,0.3);
+    height: 85px;
+  }
+  nav .nav-banner { height: 85px; display: flex; align-items: center; }
+  nav .nav-banner img { height: 85px; width: auto; display: block; }
+  nav .cta-nav {
+    background: var(--gold); color: var(--dark);
+    padding: 12px 28px; border-radius: 2px;
+    font-weight: 600; font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s;
+  }
+  nav .cta-nav:hover { background: var(--gold-light); }
+
+  /* HERO IMAGE */
+  .post-hero {
+    margin-top: 85px;
+    height: 520px;
+    overflow: hidden;
+    position: relative;
+  }
+  .post-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    filter: brightness(0.7);
+  }
+  .post-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,31,24,0.85) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 56px 80px;
+  }
+  .post-category {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .post-hero-overlay h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    max-width: 800px;
+    margin-bottom: 16px;
+  }
+  .post-meta {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(250,247,240,0.55);
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    max-width: 800px;
+    margin: 32px auto 0;
+    padding: 0 48px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-mid);
+  }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--gold-light); }
+  .breadcrumb span { margin: 0 8px; }
+
+  /* POST CONTENT */
+  .post-content {
+    max-width: 800px;
+    margin: 40px auto 80px;
+    padding: 0 48px;
+  }
+
+  .post-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--forest);
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(27,67,50,0.15);
+  }
+
+  .post-content p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+
+  .post-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 300;
+    color: var(--forest);
+    margin: 56px 0 20px;
+    line-height: 1.2;
+  }
+  .post-content h2 em { font-style: italic; color: var(--gold); }
+
+  .post-content ul {
+    margin: 0 0 24px 0;
+    padding: 0;
+    list-style: none;
+  }
+  .post-content ul li {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--text-mid);
+    padding: 6px 0 6px 24px;
+    position: relative;
+    letter-spacing: 0.3px;
+  }
+  .post-content ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 9px;
+    top: 10px;
+  }
+
+  /* INLINE PHOTOS */
+  .post-image {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 2px;
+    margin: 40px 0;
+    display: block;
+  }
+  .post-image-caption {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(74,85,104,0.6);
+    text-align: center;
+    margin-top: -28px;
+    margin-bottom: 40px;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    margin: 40px 0;
+    padding: 4px 0 4px 32px;
+  }
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--forest);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  /* CTA BOX */
+  .post-cta {
+    background: var(--forest);
+    padding: 48px;
+    border-radius: 2px;
+    text-align: center;
+    margin: 56px 0 0;
+  }
+  .post-cta .eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: block;
+  }
+  .post-cta h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .post-cta h3 em { font-style: italic; color: var(--gold-light); }
+  .post-cta p {
+    font-size: 13px;
+    color: rgba(250,247,240,0.65);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+  }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 16px 40px;
+    border-radius: 2px;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.25s;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* BACK LINK */
+  .back-link {
+    display: inline-block;
+    margin: 48px 0 0;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--gold-light); }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+  footer img { height: 44px; opacity: 0.9; }
+  footer .footer-links { display: flex; gap: 32px; }
+  footer a { color: rgba(250,247,240,0.6); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.2s; }
+  footer a:hover { color: var(--gold-light); }
+  footer .footer-contact { font-size: 12px; color: rgba(250,247,240,0.5); text-align: right; }
+  footer .footer-contact a { font-size: 12px; text-transform: none; color: var(--gold-light); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 16px 0 0; height: 64px; }
+    nav .nav-banner img { height: 64px; }
+    .post-hero { margin-top: 64px; height: 360px; }
+    .post-hero-overlay { padding: 32px 24px; }
+    .breadcrumb { padding: 0 24px; }
+    .post-content { padding: 0 24px; margin: 32px auto 60px; }
+    .post-image { height: 260px; }
+    .post-cta { padding: 32px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; }
+    footer .footer-contact { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-banner">
+    <a href="../../index.html"><img src="../../nav_logo_rect.png" alt="Packed and Present Travel"></a>
+  </div>
+  <a href="../../intake.html" class="cta-nav">Start Planning</a>
+</nav>
+
+<!-- HERO -->
+<div class="post-hero">
+  <img src="../../abu_dhabi_arch.jpg" alt="Child at Abu Dhabi mosque at sunset">
+  <div class="post-hero-overlay">
+    <span class="post-category">Getting Started</span>
+    <h1>Planning Your First Family Vacation: Where to Start</h1>
+    <div class="post-meta">April 27, 2026 &nbsp;✦&nbsp; Packed & Present Travel</div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="../../index.html">Home</a>
+  <span>→</span>
+  <a href="../index.html">Blog</a>
+  <span>→</span>
+  Planning Your First Family Vacation
+</div>
+
+<!-- POST CONTENT -->
+<article class="post-content">
+
+  <p class="post-intro">Family vacations sound magical in theory. Matching luggage. Kids laughing on the beach. Everyone present, phones down, making memories. But the moment you actually sit down to plan one, reality hits fast. Where do we even go? Can we afford it? Will the kids survive a long flight? What if we pick the wrong place and waste thousands of dollars?</p>
+
+  <p>If that sounds familiar, you're not alone. Most families spend more time <em>thinking</em> about taking a trip than actually taking one. This guide is here to change that. Here's exactly where to start.</p>
+
+  <h2>Step 1: Start With a Real Budget<br><em>(Not a Dream Budget)</em></h2>
+
+  <p>Before you open a single travel website, talk about money. Not the "wouldn't it be nice" number — the actual number you're comfortable spending without financial stress on the other side of the trip.</p>
+
+  <p>A realistic family travel budget includes:</p>
+  <ul>
+    <li>Flights or driving costs</li>
+    <li>Lodging (usually your biggest expense)</li>
+    <li>Food and dining</li>
+    <li>Activities and entrance fees</li>
+    <li>Travel insurance (yes, especially with kids)</li>
+    <li>A buffer for the unexpected</li>
+  </ul>
+
+  <p>You don't need to know exact prices yet. You just need a ballpark. $3,000? $7,000? $15,000? That one number eliminates half your destination options immediately — which is actually a good thing. It makes decisions easier, not harder.</p>
+
+  <h2>Step 2: Pick a Trip Type<br><em>Before You Pick a Destination</em></h2>
+
+  <p>Here's where most families go wrong: they start Googling specific destinations before they know what kind of trip they actually want.</p>
+
+  <p>Instead, ask your family these questions first:</p>
+  <ul>
+    <li><strong>Do we want to relax or explore?</strong> (Beach vs. city)</li>
+    <li><strong>Are the kids old enough for theme parks?</strong> (Disney hits different at 4 vs. 9)</li>
+    <li><strong>Does anyone get seasick?</strong> (Cruises are incredible — but not for everyone)</li>
+    <li><strong>How adventurous are we feeling?</strong> (All-inclusive resort vs. international adventure)</li>
+  </ul>
+
+  <p>Once you know your trip <em>type</em>, destination choices become obvious. A family that wants relaxation + kids' activities + no cooking? That could be an all-inclusive Caribbean resort or a cruise — both check those boxes, and the right choice depends on your family's personality. A family that wants magic, rides, and structured fun? That's a theme park vacation. A family ready to expose their kids to different cultures? That's international travel.</p>
+
+  <div class="pull-quote">
+    <p>Pick the type first. The destination follows naturally.</p>
+  </div>
+
+  <img class="post-image" src="../../kid-at-terminal.jpg" alt="Kid at airport terminal ready to travel">
+  <p class="post-image-caption">Proof that kids can handle airports — with the right preparation</p>
+
+  <h2>Step 3: Be Honest<br><em>About Trip Length</em></h2>
+
+  <p>First-time family travelers almost always make one of two mistakes: they plan too short a trip and feel rushed, or they plan too long and everyone hits a wall by day five.</p>
+
+  <p>Here's a simple guide:</p>
+  <ul>
+    <li><strong>Weekend trips (2–3 days):</strong> Great for road trips, local adventures, or short flights if you have some travel experience under your belt. Not the best starting point for first-timers with little ones.</li>
+    <li><strong>4–5 days:</strong> The sweet spot for most first-time family trips. Enough time to settle in without overdoing it.</li>
+    <li><strong>7 days:</strong> Works well for beach vacations and cruises where slower pacing is built in.</li>
+    <li><strong>10+ days:</strong> Best for international travel where the long flight needs to be worth it.</li>
+  </ul>
+
+  <p>Also consider your kids' ages honestly. Toddlers need nap schedules. Tweens need space. Teenagers need to feel like the trip wasn't designed entirely around a 6-year-old. Planning trip length around your actual family — not your ideal family — makes the whole experience smoother.</p>
+
+  <img class="post-image" src="../../kid-on-plane-window.jpg" alt="Kid relaxed on the plane looking out the window">
+  <p class="post-image-caption">Kids handle flights better than most parents expect — especially with the right preparation</p>
+
+  <h2>Step 4: Timing<br><em>Is Everything</em></h2>
+
+  <p>When you travel matters almost as much as where you travel. For families, timing involves three things: school calendars, seasonal pricing, and crowd levels.</p>
+
+  <p><strong>School calendars:</strong> If you can travel outside of peak school breaks (spring break, summer, holiday weeks), you'll pay significantly less and deal with smaller crowds. Even pulling kids out for a few days during shoulder season can save hundreds — sometimes thousands — of dollars.</p>
+
+  <p><strong>Seasonal pricing:</strong> Most destinations have a peak season and an off-season. The Caribbean in January costs more than the Caribbean in May. Disney World in July is a different experience than Disney World in September. A travel agent can tell you exactly when to go to get the best experience at the best price.</p>
+
+  <p><strong>Booking window:</strong> For family travel, booking 2–3 months in advance is generally the sweet spot. Early enough to get good availability and pricing, late enough that plans don't change dramatically.</p>
+
+  <h2>Step 5: The Research Phase<br><em>(And Why It Gets Overwhelming)</em></h2>
+
+  <p>Here's the honest truth about planning family travel in 2026: there is more information available than ever, and most of it will confuse you.</p>
+
+  <p>Travel blogs contradict each other. Reddit threads are outdated. Hotel reviews are a mixed bag. Flight comparison sites show you prices that disappear the moment you click on them. And none of it accounts for <em>your</em> specific family — your kids' ages, your travel style, your budget, your anxiety about flying with a toddler for the first time.</p>
+
+  <div class="pull-quote">
+    <p>This is where working with a travel agent changes everything.</p>
+  </div>
+
+  <p>A good travel agent doesn't just book flights and hotels. They ask the right questions, filter out the noise, and match your family to experiences that actually fit your life. They know which resorts have the best kids' clubs, which cruise lines work best for different age groups, and which destinations are genuinely worth the long flight with young children.</p>
+
+  <p>More importantly — they've been there. Or they know someone who has.</p>
+
+  <img class="post-image" src="../../sydney_harbor.jpg" alt="Sydney Opera House from the water">
+  <p class="post-image-caption">Sydney, Australia — a long-haul trip that is absolutely worth it for the right family</p>
+
+  <!-- CTA BOX -->
+  <div class="post-cta">
+    <span class="eyebrow">Your family's next adventure awaits</span>
+    <h3>Ready to stop planning<br>and start <em>going?</em></h3>
+    <p>The hardest part of your first family vacation isn't the trip itself — it's making the decision to actually book it. Packed & Present is here to take it from there.</p>
+    <a href="../../intake.html" class="btn-gold">Let's Plan Your Trip →</a>
+  </div>
+
+  <a href="../index.html" class="back-link">← Back to All Posts</a>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-banner">
+    <img src="../../nav_logo_rect.png" alt="Packed and Present Travel">
+  </div>
+  <div class="footer-links">
+    <a href="../../about.html">About</a>
+    <a href="../../index.html#services">Services</a>
+    <a href="../../index.html#signup">Contact</a>
+    <a href="../index.html">Blog</a>
+  </div>
+  <div class="footer-contact">
+    <a href="mailto:hello@packedandpresent.com">hello@packedandpresent.com</a><br>
+    <span style="color:rgba(250,247,240,0.4); font-size:11px;">(202) 838-7452 · packedandpresent.com</span>
+  </div>
+</footer>
+
+</body>
+</html>
