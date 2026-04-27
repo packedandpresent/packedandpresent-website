@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Consultation — Packed & Present Travel</title>
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1B4332;
+    --gold: #B8860B;
+    --gold-light: #D4A017;
+    --cream: #FAF7F0;
+    --dark: #0D1F18;
+    --nav-dark: #0a2a25;
+    --text-mid: #4a5568;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Josefin Sans', sans-serif; background: var(--cream); color: var(--dark); }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--nav-dark);
+    border-bottom: 1px solid rgba(184,134,11,0.3);
+    height: 85px; display: flex;
+    justify-content: space-between; align-items: center;
+    padding: 0 48px 0 0;
+  }
+  nav .nav-banner { height: 85px; display: flex; align-items: center; }
+  nav .nav-banner img { height: 85px; width: auto; display: block; }
+  nav a.home-link {
+    color: rgba(250,247,240,0.6); text-decoration: none;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a.home-link:hover { color: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--forest); padding: 40px 48px; text-align: center;
+  }
+  .hero .eyebrow {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 12px; display: block;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 48px); font-weight: 300;
+    color: var(--cream); margin-bottom: 10px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p {
+    font-size: 13px; color: rgba(250,247,240,0.65);
+    line-height: 1.8; max-width: 560px; margin: 0 auto;
+  }
+
+  /* ── PROGRESS ── */
+  .progress {
+    background: var(--nav-dark); padding: 14px 48px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .step { display: flex; align-items: center; gap: 8px; }
+  .step-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600; flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .step-num.done { background: var(--gold); color: var(--dark); }
+  .step-num.active { background: var(--cream); color: var(--forest); }
+  .step-num.pending { background: rgba(250,247,240,0.15); color: rgba(250,247,240,0.4); }
+  .step-num.locked { background: rgba(250,247,240,0.08); color: rgba(250,247,240,0.2); }
+  .step-label {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .step-label.done { color: var(--gold); }
+  .step-label.active { color: var(--cream); }
+  .step-label.pending { color: rgba(250,247,240,0.3); }
+  .step-label.locked { color: rgba(250,247,240,0.15); }
+  .step-line { flex: 1; height: 1px; background: rgba(250,247,240,0.15); }
+
+  /* ── FORM ── */
+  .form-wrap { max-width: 800px; margin: 0 auto; padding: 40px 48px; }
+  .form-step { display: none; }
+  .form-step.active { display: block; }
+
+  .section-title {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(27,67,50,0.15);
+  }
+  .form-section { margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--forest); font-weight: 600;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    border: 1px solid rgba(27,67,50,0.2); padding: 11px 14px;
+    font-family: 'Josefin Sans', sans-serif; font-size: 13px;
+    color: var(--dark); background: white; border-radius: 2px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  /* ── CHIPS ── */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .chip {
+    font-size: 11px; padding: 7px 14px;
+    border: 1px solid rgba(27,67,50,0.2); border-radius: 20px;
+    color: var(--text-mid); cursor: pointer; transition: all 0.2s;
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--gold); color: var(--forest); }
+  .chip.selected { background: var(--forest); color: var(--cream); border-color: var(--forest); }
+
+  /* ── OCCASION BOX ── */
+  .occasion-box {
+    background: #f5f0e8; border: 1px solid rgba(184,134,11,0.25);
+    border-radius: 4px; padding: 16px; margin-top: 10px; display: none;
+  }
+  .occasion-box.visible { display: block; }
+  .occasion-box .occasion-label {
+    font-size: 11px; color: var(--gold); margin-bottom: 12px;
+    font-style: italic; letter-spacing: 0.5px;
+  }
+
+  /* ── BOOKING GATE (bottom of Step 3) ── */
+  .booking-gate {
+    background: linear-gradient(135deg, var(--forest) 0%, #143728 100%);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-top: 28px;
+    text-align: center;
+    border: 1px solid rgba(184,134,11,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .booking-gate::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(184,134,11,0.03) 20px,
+      rgba(184,134,11,0.03) 40px
+    );
+  }
+  .booking-gate-inner { position: relative; z-index: 1; }
+  .booking-gate .gate-eyebrow {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 10px; display: block;
+  }
+  .booking-gate h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .booking-gate h3 em { font-style: italic; color: var(--gold-light); }
+  .booking-gate p {
+    font-size: 12px; color: rgba(250,247,240,0.6);
+    line-height: 1.8; margin-bottom: 24px; max-width: 420px; margin-left: auto; margin-right: auto;
+  }
+  .btn-book-gate {
+    background: var(--gold); color: var(--dark);
+    font-size: 12px; font-weight: 600; padding: 15px 36px;
+    border: none; border-radius: 2px; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif; transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-book-gate:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,134,11,0.35); }
+  .btn-book-gate:disabled {
+    background: rgba(184,134,11,0.3); color: rgba(13,31,24,0.4);
+    cursor: not-allowed; transform: none; box-shadow: none;
+  }
+
+  /* Booked confirmation badge — shown inline after gate collapses */
+  .booked-badge {
+    display: none;
+    align-items: center; justify-content: center; gap: 10px;
+    border: 1px solid rgba(27,67,50,0.2);
+    background: rgba(27,67,50,0.04);
+    border-radius: 3px; padding: 14px 24px; margin-top: 16px;
+  }
+  .booked-badge.visible { display: flex; }
+  .booked-badge .badge-check {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--gold); color: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .booked-badge span {
+    font-size: 11px; letter-spacing: 1px; color: var(--forest);
+    text-transform: uppercase;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px; padding-top: 20px;
+    border-top: 1px solid rgba(27,67,50,0.1);
+  }
+  .btn-back {
+    background: transparent; color: var(--forest);
+    font-size: 11px; font-weight: 600; padding: 11px 20px;
+    border: 1px solid rgba(27,67,50,0.2); border-radius: 2px;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif; transition: all 0.2s;
+  }
+  .btn-back:hover { border-color: var(--forest); }
+  .btn-next {
+    background: var(--gold); color: var(--dark);
+    font-size: 11px; font-weight: 600; padding: 11px 24px;
+    border: none; border-radius: 2px; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif; transition: all 0.2s;
+  }
+  .btn-next:hover { background: var(--gold-light); }
+  .btn-next:disabled {
+    background: rgba(184,134,11,0.25); color: rgba(13,31,24,0.3);
+    cursor: not-allowed;
+  }
+  .btn-next-tooltip {
+    font-size: 10px; color: rgba(184,134,11,0.7); letter-spacing: 1px;
+    text-transform: uppercase; text-align: right;
+    margin-top: 6px; display: none;
+  }
+  .btn-next-tooltip.visible { display: block; }
+
+  .privacy-note {
+    font-size: 11px; color: var(--text-mid); text-align: center; margin-top: 12px;
+  }
+
+  /* ── OPTIONAL BADGE ── */
+  .optional-note {
+    font-size: 10px; letter-spacing: 1px; color: rgba(184,134,11,0.6);
+    text-transform: uppercase; margin-left: 8px; font-style: normal;
+    vertical-align: middle;
+  }
+
+  /* ── STEP 4: locked state ── */
+  .step4-locked {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 48px 24px; text-align: center;
+  }
+  .lock-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(27,67,50,0.08);
+    border: 1px solid rgba(27,67,50,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 18px; color: var(--text-mid);
+  }
+  .step4-locked h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 300; color: var(--forest); margin-bottom: 8px;
+  }
+  .step4-locked h3 em { font-style: italic; color: var(--gold); }
+  .step4-locked p {
+    font-size: 12px; color: var(--text-mid); line-height: 1.9;
+    max-width: 380px;
+  }
+
+  /* ── REVIEW ── */
+  #reviewContent {
+    background: white;
+    border: 1px solid rgba(27,67,50,0.1);
+    border-radius: 4px; padding: 24px;
+    margin-bottom: 16px; font-size: 13px;
+    line-height: 2; color: var(--text-mid);
+  }
+  .review-section-head {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--forest); font-weight: 600;
+    border-bottom: 1px solid rgba(27,67,50,0.1);
+    padding-bottom: 6px; margin-bottom: 10px; margin-top: 16px;
+  }
+  .review-section-head:first-child { margin-top: 0; }
+  .review-row { display: flex; gap: 8px; margin-bottom: 4px; }
+  .review-key { color: var(--text-mid); min-width: 130px; font-size: 11px; }
+  .review-val { color: var(--dark); font-weight: 400; }
+
+  /* Booked confirmation in Step 4 */
+  .step4-booked-status {
+    background: rgba(27,67,50,0.05);
+    border: 1px solid rgba(27,67,50,0.15);
+    border-radius: 3px; padding: 12px 18px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .step4-booked-status .check {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--gold); color: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0;
+  }
+  .step4-booked-status span {
+    font-size: 11px; letter-spacing: 1px; color: var(--forest);
+    text-transform: uppercase;
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none; text-align: center; padding: 64px 48px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .success-screen.visible { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  .success-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--forest); color: var(--gold-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin: 0 auto 24px;
+  }
+  .success-screen h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300; color: var(--forest); margin-bottom: 12px;
+  }
+  .success-screen h2 em { font-style: italic; color: var(--gold); }
+  .success-screen p {
+    font-size: 13px; color: var(--text-mid); line-height: 1.9;
+    max-width: 520px; margin: 0 auto 8px;
+  }
+  .success-divider {
+    width: 48px; height: 1px; background: var(--gold);
+    margin: 20px auto; opacity: 0.5;
+  }
+  .success-details {
+    font-size: 11px; color: var(--text-mid); letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; z-index: 1000;
+    background: rgba(13,31,24,0.88);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: white; border-radius: 4px;
+    width: 100%; max-width: 680px;
+    max-height: 90vh; overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .modal-header {
+    background: var(--nav-dark); padding: 16px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-shrink: 0;
+  }
+  .modal-header-left { display: flex; flex-direction: column; gap: 2px; }
+  .modal-eyebrow {
+    font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: rgba(212,160,23,0.6);
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 300; color: var(--gold-light);
+  }
+  .modal-title em { font-style: italic; }
+  .modal-close {
+    background: none; border: none; color: rgba(250,247,240,0.5);
+    font-size: 18px; cursor: pointer; padding: 4px 8px; line-height: 1;
+    transition: color 0.2s; border-radius: 2px;
+  }
+  .modal-close:hover { color: var(--gold-light); }
+  .modal-body { flex: 1; overflow-y: auto; }
+  .modal-footer {
+    background: var(--forest); padding: 10px 24px; text-align: center;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-footer span {
+    font-size: 10px; color: rgba(250,247,240,0.4); letter-spacing: 0.5px;
+  }
+  .modal-footer-done {
+    background: var(--gold); color: var(--dark);
+    font-size: 10px; font-weight: 600; padding: 8px 18px;
+    border: none; border-radius: 2px; letter-spacing: 1.5px;
+    text-transform: uppercase; cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif; transition: background 0.2s;
+  }
+  .modal-footer-done:hover { background: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer a {
+    color: rgba(250,247,240,0.5); text-decoration: none;
+    font-size: 11px; letter-spacing: 1px; transition: color 0.2s;
+  }
+  footer a:hover { color: var(--gold-light); }
+  footer span {
+    font-size: 11px; color: rgba(250,247,240,0.3);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 16px 0 0; height: 70px; }
+    nav .nav-banner img { height: 70px; }
+    .hero { padding: 28px 24px; }
+    .progress { padding: 12px 20px; }
+    .step-label { display: none; }
+    .form-wrap { padding: 28px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .booking-gate { padding: 24px 20px; }
+    footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-banner">
+    <img src="nav_logo_rect.png" alt="Packed and Present Travel">
+  </div>
+  <a href="/" class="home-link">Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="eyebrow">Pre-Consultation Intake Form</span>
+  <h1>Tell us about your <em>dream trip</em></h1>
+  <p>This helps Natosha come prepared and make the most of your 30-minute consultation. Takes about 3 minutes to complete.</p>
+</section>
+
+<!-- PROGRESS BAR -->
+<div class="progress" id="progressBar">
+  <div class="step">
+    <div class="step-num active" id="num1">1</div>
+    <span class="step-label active" id="lbl1">About You</span>
+  </div>
+  <div class="step-line"></div>
+  <div class="step">
+    <div class="step-num pending" id="num2">2</div>
+    <span class="step-label pending" id="lbl2">Your Trip</span>
+  </div>
+  <div class="step-line"></div>
+  <div class="step">
+    <div class="step-num pending" id="num3">3</div>
+    <span class="step-label pending" id="lbl3">Preferences</span>
+  </div>
+  <div class="step-line"></div>
+  <div class="step">
+    <div class="step-num locked" id="num4">4</div>
+    <span class="step-label locked" id="lbl4">Confirm</span>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+
+  <!-- ══ STEP 1: About You ══ -->
+  <div class="form-step active" id="step1">
+    <div class="form-section">
+      <div class="section-title">Step 1 — About You</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" id="firstName" placeholder="Jane"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" id="lastName" placeholder="Smith"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email Address</label><input type="email" id="email" placeholder="jane@email.com"></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" id="phone" placeholder="(202) 000-0000"></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Number of Travelers</label>
+          <select id="travelers">
+            <option value="">Select...</option>
+            <option>2 (Just Us)</option>
+            <option>3-4 (Small Family)</option>
+            <option>5-6 (Medium Family)</option>
+            <option>7+ (Large Group)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <div></div>
+      <button class="btn-next" onclick="goToStep(2)">Next Step →</button>
+    </div>
+    <p class="privacy-note">Your information is safe with us · packedandpresent.com</p>
+  </div>
+
+  <!-- ══ STEP 2: Your Trip ══ -->
+  <div class="form-step" id="step2">
+    <div class="form-section">
+      <div class="section-title">Step 2 — Your Trip</div>
+      <div class="form-row">
+        <div class="form-group"><label>Destination in Mind</label><input type="text" id="destination" placeholder="Egypt, Disney, Anywhere warm..."></div>
+        <div class="form-group"><label>Estimated Travel Date</label><input type="text" id="travelDate" placeholder="Summer 2026, Flexible..."></div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Trip Type</label>
+          <div class="chip-group" id="tripType">
+            <div class="chip" onclick="toggleChip(this)">International</div>
+            <div class="chip" onclick="toggleChip(this)">Cruise</div>
+            <div class="chip" onclick="toggleChip(this)">Theme Parks</div>
+            <div class="chip" onclick="toggleChip(this)">Beach / Resort</div>
+            <div class="chip" onclick="toggleChip(this)">National Parks</div>
+            <div class="chip" onclick="toggleChip(this)">City Break</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Approximate Budget</label>
+          <select id="budget">
+            <option value="">Select range...</option>
+            <option>Under $3,000</option>
+            <option>$3,000 - $6,000</option>
+            <option>$6,000 - $10,000</option>
+            <option>$10,000 - $20,000</option>
+            <option>$20,000+</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Trip Duration</label>
+          <select id="duration">
+            <option value="">Select...</option>
+            <option>3-4 days (Weekend)</option>
+            <option>5-6 days</option>
+            <option>7-10 days</option>
+            <option>11-14 days</option>
+            <option>2+ weeks</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(1)">← Back</button>
+      <button class="btn-next" onclick="goToStep(3)">Next Step →</button>
+    </div>
+    <p class="privacy-note">Your information is safe with us · packedandpresent.com</p>
+  </div>
+
+  <!-- ══ STEP 3: Preferences (optional) + Booking Gate ══ -->
+  <div class="form-step" id="step3">
+    <div class="form-section">
+      <div class="section-title">
+        Step 3 — Preferences &amp; Special Needs
+        <span class="optional-note">(Optional)</span>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Accommodation Style</label>
+          <div class="chip-group" id="accommodation">
+            <div class="chip" onclick="toggleChip(this)">Hotel</div>
+            <div class="chip" onclick="toggleChip(this)">All-Inclusive Resort</div>
+            <div class="chip" onclick="toggleChip(this)">Vacation Rental</div>
+            <div class="chip" onclick="toggleChip(this)">Budget-Friendly</div>
+            <div class="chip" onclick="toggleChip(this)">Luxury</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row full" style="margin-top:16px;">
+        <div class="form-group">
+          <label>Special Occasion</label>
+          <select id="occasion" onchange="handleOccasion()">
+            <option value="">None</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Anniversary">Anniversary</option>
+            <option value="Graduation">Graduation</option>
+            <option value="Honeymoon">Honeymoon</option>
+            <option value="First International Trip">First International Trip</option>
+            <option value="Holiday">Holiday</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="occasion-box" id="occasionBox">
+            <div class="occasion-label" id="occasionLabel">When is the occasion? We'll send a special note on the day.</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Month</label>
+                <select id="occasionMonth">
+                  <option value="">Select...</option>
+                  <option>January</option><option>February</option><option>March</option>
+                  <option>April</option><option>May</option><option>June</option>
+                  <option>July</option><option>August</option><option>September</option>
+                  <option>October</option><option>November</option><option>December</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Day</label>
+                <select id="occasionDay">
+                  <option value="">Select...</option>
+                  <script>for(var i=1;i<=31;i++) document.write('<option>'+i+'</option>');</script>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Accessibility or Dietary Needs</label>
+          <input type="text" id="accessibility" placeholder="Wheelchair access, dietary restrictions, etc. or None">
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>Anything else we should know?</label>
+          <textarea id="notes" placeholder="Travel with grandparents, kids ages, special requests..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(2)">← Back</button>
+      <button class="btn-next" onclick="goToStep(4)">Review &amp; Confirm →</button>
+    </div>
+    <p class="privacy-note">Your information is safe with us · packedandpresent.com</p>
+  </div>
+
+  <!-- ══ STEP 4: Review & Confirm ══ -->
+  <div class="form-step" id="step4">
+    <div class="form-section">
+      <div class="section-title">Step 4 — Review &amp; Confirm</div>
+      <div id="reviewContent"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goToStep(3)">← Back</button>
+      <button class="btn-next" id="submitBtn" onclick="submitAndBook()">Reserve My Consultation Time →</button>
+    </div>
+    <p class="privacy-note" style="margin-top:10px;">Clicking above submits your intake form and opens the booking calendar.</p>
+  </div>
+
+  <!-- ══ SUCCESS ══ -->
+  <div class="success-screen" id="successScreen">
+    <div class="step4-booked-status" style="max-width:520px;margin:0 auto 28px;border-radius:3px;">
+      <div class="check">✓</div>
+      <span>Consultation time reserved · Check your calendar for confirmation</span>
+    </div>
+    <div class="success-icon">✦</div>
+    <h2>You're all <em>packed!</em></h2>
+    <div class="success-divider"></div>
+    <p>Your intake form has been received and your consultation is on the calendar. Natosha will be in touch with everything you need to know before your session.</p>
+    <p style="margin-top:16px;">Keep an eye on <strong id="successEmail" style="color:var(--forest);"></strong> for your confirmation.</p>
+    <div class="success-divider"></div>
+    <p class="success-details">hello@packedandpresent.com · packedandpresent.com</p>
+  </div>
+
+</div>
+
+<!-- ══ BOOKING MODAL ══ -->
+<div class="modal-overlay" id="bookingModal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <span class="modal-eyebrow">Free 30-Minute Session</span>
+        <div class="modal-title">Book your <em>consultation</em></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <iframe
+        src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1CJ8qCUhRTxLadzFA0hfWeAAtphMoXhWAR3YaOhd1AjDDH30XE2GMbgjF6zB18nVCjxD8oVU8h?gv=true"
+        style="border:0; display:block;"
+        width="100%" height="600" frameborder="0">
+      </iframe>
+    </div>
+    <div class="modal-footer">
+      <span>hello@packedandpresent.com · packedandpresent.com</span>
+      <button class="modal-footer-done" onclick="confirmBooked()">I've Booked My Time ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/">packedandpresent.com</a>
+  <span>hello@packedandpresent.com · (202) 838-7452</span>
+</footer>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec';
+var currentStep = 1;
+
+// ── CHIP TOGGLE ──
+function toggleChip(el) {
+  el.classList.toggle('selected');
+}
+function getSelectedChips(groupId) {
+  var chips = document.querySelectorAll('#' + groupId + ' .chip.selected');
+  return Array.from(chips).map(c => c.textContent).join(', ') || '—';
+}
+
+// ── OCCASION ──
+function handleOccasion() {
+  var val = document.getElementById('occasion').value;
+  var box = document.getElementById('occasionBox');
+  var label = document.getElementById('occasionLabel');
+  var showDate = val && val !== '' && val !== 'Honeymoon' && val !== 'First International Trip' && val !== 'Holiday';
+  if (showDate) {
+    box.classList.add('visible');
+    label.textContent = val === 'Other'
+      ? 'When is the occasion? We\'ll send a special note on the day.'
+      : 'When is the ' + val.toLowerCase() + '? We\'ll send a special note on the day.';
+  } else {
+    box.classList.remove('visible');
+  }
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('bookingModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('bookingModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('bookingModal')) closeModal();
+}
+
+// Called when user clicks "I've Booked My Time ✓" inside the modal
+function confirmBooked() {
+  closeModal();
+  // Success screen is already visible behind the modal — scroll to top to show it
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── PROGRESS ──
+function updateProgress(step) {
+  for (var i = 1; i <= 4; i++) {
+    var num = document.getElementById('num' + i);
+    var lbl = document.getElementById('lbl' + i);
+    if (i < step) {
+      num.className = 'step-num done';
+      num.textContent = '✓';
+      lbl.className = 'step-label done';
+    } else if (i === step) {
+      num.className = 'step-num active';
+      num.textContent = i;
+      lbl.className = 'step-label active';
+    } else if (i === 4 && step < 4) {
+      num.className = 'step-num pending';
+      num.textContent = i;
+      lbl.className = 'step-label pending';
+    } else {
+      num.className = 'step-num pending';
+      num.textContent = i;
+      lbl.className = 'step-label pending';
+    }
+  }
+}
+
+// ── REVIEW ──
+function buildReview() {
+  var html = '';
+
+  html += '<div class="review-section-head">About You</div>';
+  html += '<div class="review-row"><span class="review-key">Name</span><span class="review-val">'
+    + esc(document.getElementById('firstName').value) + ' ' + esc(document.getElementById('lastName').value) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Email</span><span class="review-val">'
+    + esc(document.getElementById('email').value) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Phone</span><span class="review-val">'
+    + esc(document.getElementById('phone').value) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Travelers</span><span class="review-val">'
+    + esc(document.getElementById('travelers').value) + '</span></div>';
+
+  html += '<div class="review-section-head">Your Trip</div>';
+  html += '<div class="review-row"><span class="review-key">Destination</span><span class="review-val">'
+    + esc(document.getElementById('destination').value) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Travel Date</span><span class="review-val">'
+    + esc(document.getElementById('travelDate').value) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Trip Type</span><span class="review-val">'
+    + esc(getSelectedChips('tripType')) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Budget</span><span class="review-val">'
+    + esc(document.getElementById('budget').value) + '</span></div>';
+  html += '<div class="review-row"><span class="review-key">Duration</span><span class="review-val">'
+    + esc(document.getElementById('duration').value) + '</span></div>';
+
+  html += '<div class="review-section-head">Preferences</div>';
+  html += '<div class="review-row"><span class="review-key">Accommodation</span><span class="review-val">'
+    + esc(getSelectedChips('accommodation')) + '</span></div>';
+
+  var occ = document.getElementById('occasion').value;
+  if (occ) {
+    var occasionStr = occ;
+    var month = document.getElementById('occasionMonth').value;
+    var day   = document.getElementById('occasionDay').value;
+    if (month && day) occasionStr += ' (' + month + ' ' + day + ')';
+    html += '<div class="review-row"><span class="review-key">Occasion</span><span class="review-val">'
+      + esc(occasionStr) + '</span></div>';
+  }
+  var access = document.getElementById('accessibility').value;
+  if (access) {
+    html += '<div class="review-row"><span class="review-key">Accessibility</span><span class="review-val">'
+      + esc(access) + '</span></div>';
+  }
+  var notes = document.getElementById('notes').value;
+  if (notes) {
+    html += '<div class="review-row"><span class="review-key">Notes</span><span class="review-val">'
+      + esc(notes) + '</span></div>';
+  }
+
+  document.getElementById('reviewContent').innerHTML = html;
+}
+
+function esc(str) {
+  if (!str) return '—';
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ── VALIDATION ──
+function validateStep(step) {
+  clearError();
+  var nameRegex = /^[a-zA-Z\s\-']+$/;
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var phoneRegex = /^[\d\s\-\(\)\+]+$/;
+
+  if (step === 1) {
+    var fn = document.getElementById('firstName').value.trim();
+    var ln = document.getElementById('lastName').value.trim();
+    var em = document.getElementById('email').value.trim();
+    var ph = document.getElementById('phone').value.trim();
+    var tr = document.getElementById('travelers').value;
+
+    if (!fn)              { highlightField('firstName'); showError('Please enter your first name.'); return false; }
+    if (!nameRegex.test(fn)) { highlightField('firstName'); showError('First name should contain letters only.'); return false; }
+    if (!ln)              { highlightField('lastName');  showError('Please enter your last name.'); return false; }
+    if (!nameRegex.test(ln)) { highlightField('lastName');  showError('Last name should contain letters only.'); return false; }
+    if (!em)              { highlightField('email');     showError('Please enter your email address.'); return false; }
+    if (!emailRegex.test(em)) { highlightField('email');  showError('Please enter a valid email address.'); return false; }
+    if (!ph)              { highlightField('phone');     showError('Please enter your phone number.'); return false; }
+    if (!phoneRegex.test(ph)) { highlightField('phone'); showError('Phone should contain numbers only.'); return false; }
+    if ((ph.match(/\d/g)||[]).length < 10) { highlightField('phone'); showError('Please enter at least 10 digits.'); return false; }
+    if (!tr)              { highlightField('travelers'); showError('Please select the number of travelers.'); return false; }
+  }
+
+  if (step === 2) {
+    var dest  = document.getElementById('destination').value.trim();
+    var date  = document.getElementById('travelDate').value.trim();
+    var bud   = document.getElementById('budget').value;
+    var dur   = document.getElementById('duration').value;
+    var chips = document.querySelectorAll('#tripType .chip.selected');
+
+    if (!dest)          { highlightField('destination'); showError('Please enter a destination.'); return false; }
+    if (!date)          { highlightField('travelDate');  showError('Please enter an estimated travel date.'); return false; }
+    if (chips.length === 0) { showError('Please select at least one trip type.'); return false; }
+    if (!bud)           { highlightField('budget');      showError('Please select an approximate budget.'); return false; }
+    if (!dur)           { highlightField('duration');    showError('Please select a trip duration.'); return false; }
+  }
+  return true;
+}
+
+function highlightField(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = 'var(--gold)';
+  el.focus();
+  setTimeout(function(){ if(el) el.style.borderColor = ''; }, 2500);
+}
+
+function showError(msg) {
+  clearError();
+  var err = document.createElement('div');
+  err.id = 'formError';
+  err.style.cssText = 'background:#fff3cd;border:1px solid #B8860B;color:#856404;padding:10px 14px;border-radius:2px;margin-top:12px;font-size:12px;text-align:center;';
+  err.textContent = msg;
+  var row = document.querySelector('#step' + currentStep + ' .btn-row');
+  if (row) row.before(err);
+  setTimeout(function(){ clearError(); }, 3500);
+}
+function clearError() {
+  var e = document.getElementById('formError');
+  if (e) e.remove();
+}
+
+// ── NAVIGATION ──
+function goToStep(step) {
+  if (step > currentStep && !validateStep(currentStep)) return;
+
+  if (step === 4) buildReview();
+
+  document.getElementById('step' + currentStep).classList.remove('active');
+  document.getElementById('step' + step).classList.add('active');
+  currentStep = step;
+  updateProgress(step);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── SUBMIT ──
+async function submitAndBook() {
+  var btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  var data = {
+    type: 'intake',
+    firstName:      document.getElementById('firstName').value,
+    lastName:       document.getElementById('lastName').value,
+    email:          document.getElementById('email').value,
+    phone:          document.getElementById('phone').value,
+    travelers:      document.getElementById('travelers').value,
+    destination:    document.getElementById('destination').value,
+    travelDate:     document.getElementById('travelDate').value,
+    tripType:       getSelectedChips('tripType'),
+    budget:         document.getElementById('budget').value,
+    duration:       document.getElementById('duration').value,
+    accommodation:  getSelectedChips('accommodation'),
+    occasion:       document.getElementById('occasion').value,
+    occasionMonth:  document.getElementById('occasionMonth').value,
+    occasionDay:    document.getElementById('occasionDay').value,
+    accessibility:  document.getElementById('accessibility').value,
+    notes:          document.getElementById('notes').value
+  };
+
+  // Submit form in background
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  } catch(err) {
+    console.log('Submit error:', err);
+  }
+
+  // Open booking calendar simultaneously
+  openModal();
+
+  // Show success screen behind the modal
+  document.getElementById('step4').classList.remove('active');
+  document.getElementById('successScreen').classList.add('visible');
+  document.getElementById('successEmail').textContent = document.getElementById('email').value;
+  document.getElementById('progressBar').style.display = 'none';
+}
+</script>
+</body>
+</html>
