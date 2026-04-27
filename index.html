@@ -278,6 +278,28 @@
   .btn-solid-gold { background: #B8860B; color: #0D1F18; padding: 16px 36px; border: none; cursor: pointer; font-family: "Josefin Sans", sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; border-radius: 2px; transition: all 0.25s; text-decoration: none; display: inline-block; }
   .btn-solid-gold:hover { background: #D4A017; transform: translateY(-2px); }
   @media (max-width: 768px) { .cta-section { padding: 60px 24px; } .cta-buttons { flex-direction: column; align-items: center; } }
+
+  /* MAILING LIST MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,31,24,0.85); z-index: 1000; align-items: center; justify-content: center; }
+  .modal-overlay.active { display: flex; }
+  .modal-box { background: #FAF7F0; max-width: 480px; width: 90%; border-radius: 4px; overflow: hidden; position: relative; }
+  .modal-header { background: #1B4332; padding: 40px 40px 32px; text-align: center; }
+  .modal-header .eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #D4A017; margin-bottom: 12px; display: block; }
+  .modal-header h2 { font-family: "Cormorant Garamond", serif; font-size: 32px; font-weight: 300; color: #FAF7F0; line-height: 1.2; }
+  .modal-header h2 em { font-style: italic; color: #D4A017; }
+  .modal-body { padding: 32px 40px 40px; }
+  .modal-body p { font-size: 13px; color: #4a5568; line-height: 1.7; margin-bottom: 24px; }
+  .modal-field { margin-bottom: 16px; }
+  .modal-field label { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #1B4332; margin-bottom: 6px; }
+  .modal-field input { width: 100%; padding: 12px 16px; border: 1px solid rgba(27,67,50,0.2); background: white; font-family: "Josefin Sans", sans-serif; font-size: 13px; color: #0D1F18; border-radius: 2px; outline: none; transition: border-color 0.2s; }
+  .modal-field input:focus { border-color: #B8860B; }
+  .modal-submit { width: 100%; background: #B8860B; color: #0D1F18; padding: 14px; border: none; cursor: pointer; font-family: "Josefin Sans", sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; border-radius: 2px; margin-top: 8px; transition: background 0.2s; }
+  .modal-submit:hover { background: #D4A017; }
+  .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: rgba(250,247,240,0.6); font-size: 24px; cursor: pointer; line-height: 1; padding: 0; }
+  .modal-close:hover { color: #FAF7F0; }
+  .modal-success { display: none; text-align: center; padding: 40px; }
+  .modal-success h3 { font-family: "Cormorant Garamond", serif; font-size: 28px; color: #1B4332; margin-bottom: 12px; }
+  .modal-success p { font-size: 13px; color: #4a5568; line-height: 1.7; }
 </style>
 </head>
 <body>
@@ -399,8 +421,8 @@
   <h2 class="cta-heading">Ready to start <em>planning?</em></h2>
   <p class="cta-sub">Whether you&rsquo;re ready to book or just starting to dream &mdash; there&rsquo;s a place for you here.</p>
   <div class="cta-buttons">
-    <a href="index.html#signup" class="btn-ghost-gold">Join Our Mailing List</a>
-    <a href="#intake" class="btn-solid-gold">Book a Consultation &rarr;</a>
+    <a href="#" onclick="openModal(); return false;" class="btn-ghost-gold">Join Our Mailing List</a>
+    <a href="https://packedandpresent.com/intake" class="btn-solid-gold">Book a Consultation &rarr;</a>
   </div>
 </section>
 
@@ -448,6 +470,59 @@ async function handleSignup(e) {
 
   document.querySelector('.signup-form').style.display = 'none';
   document.getElementById('signup-success').style.display = 'block';
+}
+</script>
+<!-- MAILING LIST MODAL -->
+<div class="modal-overlay" id="mailingModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-header">
+      <span class="eyebrow">Stay inspired</span>
+      <h2>Join our travel <em>community</em></h2>
+    </div>
+    <div class="modal-body" id="modalForm">
+      <p>Get travel inspiration, destination guides, and family travel tips delivered straight to your inbox.</p>
+      <div class="modal-field">
+        <label>First Name</label>
+        <input type="text" id="modal-name" placeholder="Your first name">
+      </div>
+      <div class="modal-field">
+        <label>Email Address</label>
+        <input type="email" id="modal-email" placeholder="your@email.com">
+      </div>
+      <button class="modal-submit" onclick="submitModal()">Subscribe &rarr;</button>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <h3>Welcome aboard!</h3>
+      <p>You&rsquo;re on the list. Get ready for travel inspiration straight to your inbox.</p>
+    </div>
+  </div>
+</div>
+<script>
+function openModal() {
+  document.getElementById('mailingModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('mailingModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('mailingModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+async function submitModal() {
+  const name = document.getElementById('modal-name').value.trim();
+  const email = document.getElementById('modal-email').value.trim();
+  if (!name || !email) { alert('Please fill in both fields.'); return; }
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, source: 'mailing-list-popup' }),
+    });
+  } catch(e) {}
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalSuccess').style.display = 'block';
+  setTimeout(closeModal, 3000);
 }
 </script>
 </body>
