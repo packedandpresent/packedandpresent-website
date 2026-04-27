@@ -484,7 +484,11 @@ async function handleSignup(e) {
       <p>Get travel inspiration, destination guides, and family travel tips delivered straight to your inbox.</p>
       <div class="modal-field">
         <label>First Name</label>
-        <input type="text" id="modal-name" placeholder="Your first name">
+        <input type="text" id="modal-fname" placeholder="Your first name">
+      </div>
+      <div class="modal-field">
+        <label>Last Name</label>
+        <input type="text" id="modal-lname" placeholder="Your last name">
       </div>
       <div class="modal-field">
         <label>Email Address</label>
@@ -511,13 +515,14 @@ document.getElementById('mailingModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 async function submitModal() {
-  const name = document.getElementById('modal-name').value.trim();
+  const fname = document.getElementById('modal-fname').value.trim();
+  const lname = document.getElementById('modal-lname').value.trim();
   const email = document.getElementById('modal-email').value.trim();
-  if (!name || !email) { alert('Please fill in both fields.'); return; }
+  if (!fname || !lname || !email) { alert('Please fill in all fields.'); return; }
   try {
     await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
       method: 'POST',
-      body: JSON.stringify({ name, email, source: 'mailing-list-popup' }),
+      body: JSON.stringify({ firstName: fname, lastName: lname, email, source: 'mailing-list-popup' }),
     });
   } catch(e) {}
   document.getElementById('modalForm').style.display = 'none';
