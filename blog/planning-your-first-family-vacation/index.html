@@ -245,6 +245,25 @@
     transition: all 0.25s;
   }
   .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-ghost-gold {
+    background: rgba(184,134,11,0.15);
+    color: var(--gold-light);
+    padding: 15px 36px;
+    border: 1px solid rgba(184,134,11,0.5);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    border-radius: 2px; transition: all 0.25s; text-decoration: none; display: inline-block; cursor: pointer;
+  }
+  .btn-ghost-gold:hover { background: rgba(184,134,11,0.25); border-color: var(--gold-light); }
+  .btn-solid-gold {
+    background: var(--gold); color: var(--dark);
+    padding: 16px 36px; border: none; cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600;
+    border-radius: 2px; transition: all 0.25s; text-decoration: none; display: inline-block;
+  }
+  .btn-solid-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,134,11,0.4); }
 
   /* BACK LINK */
   .back-link {
@@ -287,7 +306,7 @@
   <div class="nav-banner">
     <a href="../../index.html"><img src="../../nav_logo_rect.png" alt="Packed and Present Travel"></a>
   </div>
-  <a href="../../intake.html" class="cta-nav">Start Planning</a>
+  <a href="#start-planning" class="cta-nav">Start Planning</a>
 </nav>
 
 <!-- HERO -->
@@ -398,11 +417,14 @@
   <p class="post-image-caption">Sydney, Australia — a long-haul trip that is absolutely worth it for the right family</p>
 
   <!-- CTA BOX -->
-  <div class="post-cta">
+  <div class="post-cta" id="start-planning">
     <span class="eyebrow">Your family's next adventure awaits</span>
     <h3>Ready to stop planning<br>and start <em>going?</em></h3>
     <p>The hardest part of your first family vacation isn't the trip itself — it's making the decision to actually book it. Packed & Present is here to take it from there.</p>
-    <a href="../../intake.html" class="btn-gold">Let's Plan Your Trip →</a>
+    <div class="cta-buttons">
+      <a href="#" onclick="openModal(); return false;" class="btn-ghost-gold">Join Our Mailing List</a>
+      <a href="../../intake.html" class="btn-solid-gold">Book a Consultation →</a>
+    </div>
   </div>
 
   <a href="../index.html" class="back-link">← Back to All Posts</a>
@@ -426,5 +448,82 @@
   </div>
 </footer>
 
+<div class="modal-overlay" id="mailingModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-header">
+      <span class="eyebrow">Stay inspired</span>
+      <h2>Join our travel <em>community</em></h2>
+    </div>
+    <div class="modal-body" id="modalForm">
+      <p>Get travel inspiration, destination guides, and family travel tips delivered straight to your inbox.</p>
+      <div class="modal-field">
+        <label>First Name</label>
+        <input type="text" id="modal-fname" placeholder="Your first name">
+      </div>
+      <div class="modal-field">
+        <label>Last Name</label>
+        <input type="text" id="modal-lname" placeholder="Your last name">
+      </div>
+      <div class="modal-field">
+        <label>Email Address</label>
+        <input type="email" id="modal-email" placeholder="your@email.com">
+      </div>
+      <button class="modal-submit" onclick="submitModal()">Subscribe &rarr;</button>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <h3>Welcome aboard!</h3>
+      <p>You&rsquo;re on the list. Get ready for travel inspiration straight to your inbox.</p>
+    </div>
+  </div>
+</div>
+<style>
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(13,31,24,0.85); z-index:999; justify-content:center; align-items:center; }
+  .modal-overlay.active { display:flex; }
+  .modal-box { background:var(--cream); max-width:480px; width:90%; padding:48px; border-radius:2px; position:relative; }
+  .modal-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-mid); }
+  .modal-header { margin-bottom:24px; }
+  .modal-header .eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:8px; }
+  .modal-header h2 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; color:var(--forest); }
+  .modal-header h2 em { font-style:italic; color:var(--gold); }
+  .modal-body p { font-size:13px; color:var(--text-mid); line-height:1.8; margin-bottom:24px; }
+  .modal-field { margin-bottom:16px; }
+  .modal-field label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--forest); margin-bottom:6px; }
+  .modal-field input { width:100%; padding:12px 16px; border:1px solid rgba(27,67,50,0.2); background:white; font-family:'Josefin Sans',sans-serif; font-size:13px; color:var(--dark); border-radius:2px; outline:none; }
+  .modal-field input:focus { border-color:var(--gold); }
+  .modal-submit { width:100%; background:var(--gold); color:var(--dark); padding:16px; border:none; cursor:pointer; font-family:'Josefin Sans',sans-serif; font-size:12px; letter-spacing:2.5px; text-transform:uppercase; font-weight:600; border-radius:2px; margin-top:8px; transition:background 0.2s; }
+  .modal-submit:hover { background:var(--gold-light); }
+  .modal-success { display:none; text-align:center; padding:24px 0; }
+  .modal-success h3 { font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--forest); margin-bottom:12px; }
+  .modal-success p { font-size:13px; color:var(--text-mid); }
+</style>
+<script>
+function openModal() {
+  document.getElementById('mailingModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('mailingModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('mailingModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+async function submitModal() {
+  const fname = document.getElementById('modal-fname').value.trim();
+  const lname = document.getElementById('modal-lname').value.trim();
+  const email = document.getElementById('modal-email').value.trim();
+  if (!fname || !lname || !email) { alert('Please fill in all fields.'); return; }
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
+      method: 'POST',
+      body: JSON.stringify({ firstName: fname, lastName: lname, email, source: 'blog-post-cta' }),
+    });
+  } catch(e) {}
+  document.getElementById('modalForm').style.display = 'none';
+  document.getElementById('modalSuccess').style.display = 'block';
+  setTimeout(closeModal, 3000);
+}
+</script>
 </body>
 </html>
