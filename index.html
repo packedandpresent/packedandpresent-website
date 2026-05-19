@@ -423,10 +423,10 @@
   <span class="cta-eyebrow">Your family&rsquo;s next adventure awaits</span>
   <h2 class="cta-heading">Ready to start <em>planning?</em></h2>
   <p class="cta-sub">Whether you&rsquo;re ready to book or just starting to dream &mdash; there&rsquo;s a place for you here.</p>
-  <div class="cta-buttons">
-    <a href="#" onclick="openModal(); return false;" class="btn-ghost-gold">Join Our Mailing List</a>
-    <a href="https://packedandpresent.com/intake" class="btn-solid-gold">Book a Consultation &rarr;</a>
-  </div>
+ <div class="cta-buttons">
+  <a href="https://packedandpresent.com/intake" class="btn-solid-gold">Book a Consultation &rarr;</a>
+  <a href="#" onclick="openDealsModal(); return false;" class="btn-ghost-gold">Browse Deals &amp; Destinations &rarr;</a>
+ </div>
 </section>
 
 <!-- BOTTOM BANNER -->
@@ -447,91 +447,66 @@
     <span style="color:rgba(250,247,240,0.4); font-size:11px;">(202) 838-7452 · packedandpresent.com</span>
   </div>
 </footer>
-
-
+<div class="modal-overlay" id="dealsModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeDealsModal()">&times;</button>
+    <div class="modal-header">
+      <span class="eyebrow">Before you go</span>
+      <h2>Get the best <em>deals first</em></h2>
+    </div>
+    <div class="modal-body" id="dealsModalForm">
+      <p>Drop your info and we'll send you deals, destination guides, and trip inspiration — then we'll take you straight to our booking search.</p>
+      <div class="modal-field">
+        <label>First Name</label>
+        <input type="text" id="deals-fname" placeholder="Your first name">
+      </div>
+      <div class="modal-field">
+        <label>Last Name</label>
+        <input type="text" id="deals-lname" placeholder="Your last name">
+      </div>
+      <div class="modal-field">
+        <label>Email Address</label>
+        <input type="email" id="deals-email" placeholder="your@email.com">
+      </div>
+      <button class="modal-submit" onclick="submitDealsModal()">Take Me to the Deals &rarr;</button>
+    </div>
+    <div class="modal-success" id="dealsModalSuccess">
+      <h3>You're on the list!</h3>
+      <p>Taking you to our deals now...</p>
+    </div>
+  </div>
+</div>
 <script>
-async function handleSignup(e) {
-  e.preventDefault();
-  var btn = document.querySelector('.signup-btn');
-  var inputs = document.querySelectorAll('.signup-group input');
-  var firstName = inputs[0].value.trim();
-  var lastName = inputs[1].value.trim();
-  var email = inputs[2].value.trim();
-
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-
+function openDealsModal() {
+  document.getElementById('dealsModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeDealsModal() {
+  document.getElementById('dealsModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('dealsModal').addEventListener('click', function(e) {
+  if (e.target === this) closeDealsModal();
+});
+async function submitDealsModal() {
+  const fname = document.getElementById('deals-fname').value.trim();
+  const lname = document.getElementById('deals-lname').value.trim();
+  const email = document.getElementById('deals-email').value.trim();
+  if (!fname || !lname || !email) { alert('Please fill in all fields.'); return; }
   try {
     await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email })
-    });
-  } catch(err) {
-    console.log('Submission error:', err);
-  }
-
-  document.querySelector('.signup-form').style.display = 'none';
-  document.getElementById('signup-success').style.display = 'block';
-}
-</script>
-<!-- MAILING LIST MODAL -->
-<div class="modal-overlay" id="mailingModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-header">
-      <span class="eyebrow">Stay inspired</span>
-      <h2>Join our travel <em>community</em></h2>
-    </div>
-    <div class="modal-body" id="modalForm">
-      <p>Get travel inspiration, destination guides, and family travel tips delivered straight to your inbox.</p>
-      <div class="modal-field">
-        <label>First Name</label>
-        <input type="text" id="modal-fname" placeholder="Your first name">
-      </div>
-      <div class="modal-field">
-        <label>Last Name</label>
-        <input type="text" id="modal-lname" placeholder="Your last name">
-      </div>
-      <div class="modal-field">
-        <label>Email Address</label>
-        <input type="email" id="modal-email" placeholder="your@email.com">
-      </div>
-      <button class="modal-submit" onclick="submitModal()">Subscribe &rarr;</button>
-    </div>
-    <div class="modal-success" id="modalSuccess">
-      <h3>Welcome aboard!</h3>
-      <p>You&rsquo;re on the list. Get ready for travel inspiration straight to your inbox.</p>
-    </div>
-  </div>
-</div>
-<script>
-function openModal() {
-  document.getElementById('mailingModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('mailingModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.getElementById('mailingModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-async function submitModal() {
-  const fname = document.getElementById('modal-fname').value.trim();
-  const lname = document.getElementById('modal-lname').value.trim();
-  const email = document.getElementById('modal-email').value.trim();
-  if (!fname || !lname || !email) { alert('Please fill in all fields.'); return; }
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
-      method: 'POST',
-      body: JSON.stringify({ firstName: fname, lastName: lname, email, source: 'mailing-list-popup' }),
+      body: JSON.stringify({ firstName: fname, lastName: lname, email: email, source: 'deals-modal' }),
     });
   } catch(e) {}
-  document.getElementById('modalForm').style.display = 'none';
-  document.getElementById('modalSuccess').style.display = 'block';
-  setTimeout(closeModal, 3000);
+  document.getElementById('dealsModalForm').style.display = 'none';
+  document.getElementById('dealsModalSuccess').style.display = 'block';
+  setTimeout(function() {
+    closeDealsModal();
+    window.open('https://tap3.myagentgenie.com/wanderingrootstravel', '_blank');
+  }, 2000);
 }
 </script>
 </body>
