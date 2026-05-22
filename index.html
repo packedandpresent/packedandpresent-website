@@ -311,7 +311,7 @@
   <div class="nav-banner">
     <img src="nav_logo_rect.png" alt="Packed and Present Travel">
   </div>
-  <a href="#signup" class="cta-nav">Start Planning</a>
+  <a href="https://tap3.myagentgenie.com/wanderingrootstravel/" class="cta-nav">Start Planning</a>
 </nav>
 
 <!-- COLLAGE HERO -->
@@ -329,7 +329,7 @@
     <h1>The World is<br><em>Waiting for You</em></h1>
     <p>Plan It. Pack It. Be Present.</p>
     <div class="hero-buttons">
-      <a href="#signup" class="btn-primary">Start Planning</a>
+      <a href="https://tap3.myagentgenie.com/wanderingrootstravel/" class="btn-primary">Start Planning</a>
       <a href="about.html" class="btn-outline">Our Story</a>
     </div>
   </div>
@@ -418,17 +418,6 @@
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section" id="signup">
-  <span class="cta-eyebrow">Your family&rsquo;s next adventure awaits</span>
-  <h2 class="cta-heading">Ready to start <em>planning?</em></h2>
-  <p class="cta-sub">Whether you&rsquo;re ready to book or just starting to dream &mdash; there&rsquo;s a place for you here.</p>
- <div class="cta-buttons">
-  <a href="https://packedandpresent.com/intake" class="btn-solid-gold">Book a Consultation &rarr;</a>
-  <a href="#" onclick="openDealsModal(); return false;" class="btn-ghost-gold">Browse Deals &amp; Destinations &rarr;</a>
- </div>
-</section>
-
 <!-- BOTTOM BANNER -->
 <section class="bottom-banner">
   <img src="banner_cropped.png" alt="Packed and Present Travel">
@@ -437,77 +426,14 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-links">
-    <a href="about.html">About</a>
-    <a href="#services">Services</a>
-    <a href="#signup">Contact</a>
+    <a href="about.html">About</a> 
     <a href="blog/index.html">Blog</a>
+    <a href="intake.html">Contact</a>
   </div>
   <div class="footer-contact">
     <a href="mailto:hello@packedandpresent.com">hello@packedandpresent.com</a><br>
     <span style="color:rgba(250,247,240,0.4); font-size:11px;">(202) 838-7452 · packedandpresent.com</span>
   </div>
 </footer>
-<div class="modal-overlay" id="dealsModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeDealsModal()">&times;</button>
-    <div class="modal-header">
-      <span class="eyebrow">Before you go</span>
-      <h2>Get the best <em>deals first</em></h2>
-    </div>
-    <div class="modal-body" id="dealsModalForm">
-      <p>Drop your info and we'll send you deals, destination guides, and trip inspiration — then we'll take you straight to our booking search.</p>
-      <div class="modal-field">
-        <label>First Name</label>
-        <input type="text" id="deals-fname" placeholder="Your first name">
-      </div>
-      <div class="modal-field">
-        <label>Last Name</label>
-        <input type="text" id="deals-lname" placeholder="Your last name">
-      </div>
-      <div class="modal-field">
-        <label>Email Address</label>
-        <input type="email" id="deals-email" placeholder="your@email.com">
-      </div>
-      <button class="modal-submit" onclick="submitDealsModal()">Take Me to the Deals &rarr;</button>
-    </div>
-    <div class="modal-success" id="dealsModalSuccess">
-      <h3>You're on the list!</h3>
-      <p>Taking you to our deals now...</p>
-    </div>
-  </div>
-</div>
-<script>
-function openDealsModal() {
-  document.getElementById('dealsModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeDealsModal() {
-  document.getElementById('dealsModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.getElementById('dealsModal').addEventListener('click', function(e) {
-  if (e.target === this) closeDealsModal();
-});
-async function submitDealsModal() {
-  const fname = document.getElementById('deals-fname').value.trim();
-  const lname = document.getElementById('deals-lname').value.trim();
-  const email = document.getElementById('deals-email').value.trim();
-  if (!fname || !lname || !email) { alert('Please fill in all fields.'); return; }
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: fname, lastName: lname, email: email, source: 'deals-modal' }),
-    });
-  } catch(e) {}
-  document.getElementById('dealsModalForm').style.display = 'none';
-  document.getElementById('dealsModalSuccess').style.display = 'block';
-  setTimeout(function() {
-    closeDealsModal();
-    window.open('https://tap3.myagentgenie.com/wanderingrootstravel', '_blank');
-  }, 2000);
-}
-</script>
 </body>
 </html>

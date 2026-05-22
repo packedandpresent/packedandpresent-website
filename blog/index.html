@@ -207,14 +207,9 @@
   <!-- LEFT SIDEBAR NAV -->
   <aside class="blog-sidebar">
     <span class="sidebar-label">Browse by Topic</span>
-    <ul class="category-nav">
-      <li><a href="#" class="active" data-category="all">All Posts</a></li>
-      <li><a href="#" data-category="Getting Started">Getting Started</a></li>
-      <li><a href="#" data-category="International Travel">International Travel</a></li>
-      <li><a href="#" data-category="Domestic Travel">Domestic Travel</a></li>
-      <li><a href="#" data-category="Cruises & All-Inclusives">Cruises & All-Inclusives</a></li>
-      <li><a href="#" data-category="Theme Parks">Theme Parks</a></li>
-    </ul>
+    <ul class="category-nav" id="categoryNav">
+  <li><a href="#" class="active" data-category="all">All Posts</a></li>
+</ul>
   </aside>
 
   <!-- BLOG POSTS GRID -->
@@ -231,7 +226,7 @@
   <div class="footer-links">
     <a href="/index.html">Home</a>
     <a href="/about.html">About</a>
-    <a href="#signup">Contact</a>
+    <a href="/intake.html">Contact</a>
   </div>
   <div class="footer-contact">
     <a href="mailto:hello@packedandpresent.com">hello@packedandpresent.com</a><br>
@@ -247,28 +242,33 @@
   let activeCategory = urlCategory;
 
   // Set active nav link based on URL param
-  document.querySelectorAll('.category-nav a').forEach(link => {
-    const cat = link.getAttribute('data-category');
-    if (cat === activeCategory || (activeCategory === 'all' && cat === 'all')) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
-    }
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.querySelectorAll('.category-nav a').forEach(l => l.classList.remove('active'));
-      this.classList.add('active');
-      activeCategory = this.getAttribute('data-category');
-      renderPosts(allPosts, activeCategory);
-    });
-  });
+ 
 
   let allPosts = [];
 
-  fetch('posts.json')
+ fetch('posts.json')
     .then(res => res.json())
     .then(posts => {
       allPosts = posts;
+
+      const categories = [...new Set(posts.map(p => p.category))];
+      const nav = document.getElementById('categoryNav');
+      categories.forEach(cat => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#" data-category="${cat}">${cat}</a>`;
+        nav.appendChild(li);
+      });
+
+      document.querySelectorAll('.category-nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelectorAll('.category-nav a').forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+          activeCategory = this.getAttribute('data-category');
+          renderPosts(allPosts, activeCategory);
+        });
+      });
+
       renderPosts(allPosts, activeCategory);
     })
     .catch(() => {

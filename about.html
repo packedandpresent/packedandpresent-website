@@ -184,8 +184,8 @@
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="index.html#services">Services</a>
-    <a href="index.html#signup">Contact</a>
-    <a href="index.html#signup" class="cta-nav">Start Planning</a>
+    <a href="intake.html>Contact</a>
+    <a href="https://tap3.myagentgenie.com/wanderingrootstravel/" class="cta-nav">Start Planning</a>
   </div>
 </nav>
 
@@ -241,84 +241,17 @@
     </div>
   </div>
 </div>
-<div class="cta-section">
-  <span class="eyebrow">Your family&rsquo;s next adventure awaits</span>
-  <h2>Ready to start <em>planning?</em></h2>
-  <p>Whether you&rsquo;re ready to book or just starting to dream &mdash; there&rsquo;s a place for you here.</p>
-  <div class="cta-buttons">
-    <a href="#" onclick="openModal(); return false;" class="btn-ghost-gold">Join Our Mailing List</a>
-    <a href="https://packedandpresent.com/intake" class="btn-solid-gold">Book a Consultation &rarr;</a>
-  </div>
-</div>
 
 <footer>
   <div class="footer-links">
     <a href="index.html">Home</a>
     <a href="index.html#services">Services</a>
-    <a href="index.html#signup">Contact</a>
+    <a href="intake.html">Contact</a>
   </div>
   <div class="footer-contact">
     <a href="mailto:hello@packedandpresent.com">hello@packedandpresent.com</a><br>
     <span style="color:rgba(250,247,240,0.4); font-size:11px;">(202) 838-7452 &middot; packedandpresent.com</span>
   </div>
 </footer>
-
-<div class="modal-overlay" id="mailingModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-header">
-      <span class="eyebrow">Stay inspired</span>
-      <h2>Join our travel <em>community</em></h2>
-    </div>
-    <div class="modal-body" id="modalForm">
-      <p>Get travel inspiration, destination guides, and family travel tips delivered straight to your inbox.</p>
-      <div class="modal-field">
-        <label>First Name</label>
-        <input type="text" id="modal-fname" placeholder="Your first name">
-      </div>
-      <div class="modal-field">
-        <label>Last Name</label>
-        <input type="text" id="modal-lname" placeholder="Your last name">
-      </div>
-      <div class="modal-field">
-        <label>Email Address</label>
-        <input type="email" id="modal-email" placeholder="your@email.com">
-      </div>
-      <button class="modal-submit" onclick="submitModal()">Subscribe &rarr;</button>
-    </div>
-    <div class="modal-success" id="modalSuccess">
-      <h3>Welcome aboard!</h3>
-      <p>You&rsquo;re on the list. Get ready for travel inspiration straight to your inbox.</p>
-    </div>
-  </div>
-</div>
-<script>
-function openModal() {
-  document.getElementById('mailingModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('mailingModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-document.getElementById('mailingModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-async function submitModal() {
-  const fname = document.getElementById('modal-fname').value.trim();
-  const lname = document.getElementById('modal-lname').value.trim();
-  const email = document.getElementById('modal-email').value.trim();
-  if (!fname || !lname || !email) { alert('Please fill in all fields.'); return; }
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbwh0rOB_1Pl-i78-4gRD7avVmK1u1Tk4Kve-p5FOYzd3z_VWZx9FTAy41J2PLQlxmBThw/exec', {
-      method: 'POST',
-      body: JSON.stringify({ firstName: fname, lastName: lname, email, source: 'mailing-list-popup' }),
-    });
-  } catch(e) {}
-  document.getElementById('modalForm').style.display = 'none';
-  document.getElementById('modalSuccess').style.display = 'block';
-  setTimeout(closeModal, 3000);
-}
-</script>
 </body>
 </html>
