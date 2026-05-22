@@ -251,7 +251,7 @@
     .then(posts => {
       allPosts = posts;
 
-      const categories = [...new Set(posts.map(p => p.category))];
+      const categories = [...new Set(posts.flatMap(p => Array.isArray(p.category) ? p.category : [p.category]))];
       const nav = document.getElementById('categoryNav');
       categories.forEach(cat => {
         const li = document.createElement('li');
@@ -277,7 +277,7 @@
 
   function renderPosts(posts, category) {
     const grid = document.getElementById('blogGrid');
-    const filtered = category === 'all' ? posts : posts.filter(p => p.category === category);
+    const filtered = category === 'all' ? posts : posts.filter(p => Array.isArray(p.category) ? p.category.includes(category) : p.category === category);
 
     if (filtered.length === 0) {
       grid.innerHTML = '<div class="blog-empty"><p>No posts in this category yet. Check back soon.</p></div>';
